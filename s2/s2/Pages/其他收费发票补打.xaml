@@ -135,7 +135,7 @@
                 <toolkit:DockPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
             		<!--{m:Exp Str=userfiles.f_surplusgas\=pipeline.DataContext.f_cmaddgas;userfiles.f_metergasnums\=pipeline.DataContext.f_zhi;userfiles.f_times\=0;cardid1.Load()}-->
 					<Button x:Name="save" Content="打　印" Margin="5" 
-            			 IsEnabled="{m:Exp Str=!pipeline.DataContext.HasErrors}" 
+            			 IsEnabled="{m:Exp Str=pipelines.SelectedItem!\=null and !pipeline.DataContext.HasErrors}" 
             			Click="{m:Exp Str=SaveAction.Invoke()}" Width="50"/>
                     
             	</toolkit:DockPanel>

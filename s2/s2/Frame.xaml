@@ -89,7 +89,8 @@
             <o:ObjectList Name="yldjlist" WebClientInfo="{StaticResource dbclient}"  Path="from paramvalue where param.name='用户等级'"/>
             <!--购买方式-->
             <o:ObjectList Name="buystylelist" WebClientInfo="{StaticResource dbclient}" Path="from paramvalue where param.name='购买方式'"/>
-         
+            <!--用气性质列表-->
+            <o:ObjectList Name="usegaslist" WebClientInfo="{StaticResource dbclient}" Path="{m:Exp Str=$from gasproper as gasproper left join fetch gasproper.pricetype }"/>
             <!--安装方式-->
             <o:ObjectList Name="installstylelist" WebClientInfo="{StaticResource dbclient}" Path="from paramvalue where param.name='安装方式'"/>
             <!--灶具安装方式-->

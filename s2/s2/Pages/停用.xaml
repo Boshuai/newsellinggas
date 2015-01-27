@@ -107,7 +107,7 @@
         			AutoGenerateColumns="False"  IsReadOnly="True">
         			<a:Data.Items>
         				<o:PagedObjectList x:Name="pipelineslist" WebClientInfo="{StaticResource dbclient}"
-        					Path="{m:Exp Str=$from t_userfiles where \{pipelinesearch.DataContext.Condition\} and f_userstate !\=\'注销\' and f_userstate\=\'正常\' and f_filiale \=\'\{LoginUser.f_fengongsi\}\'}"
+        					Path="{m:Exp Str=$from t_userfiles where \{pipelinesearch.DataContext.Condition\} and f_userstate\=\'正常\' and f_filiale \=\'\{LoginUser.f_fengongsi\}\'}"
         					IsOld="{m:Exp Str=SaveAction.State\=\=$End$ or pipeline.DataContext.State\=\=$End$}"
         					PageIndex="{m:Exp Str=pager.PageIndex}" PageSize="{m:Exp Str=pager.PageSize}" SumNames=","/>
         			</a:Data.Items>
@@ -251,13 +251,13 @@
             				<o:PropertySetter PropertyName="f_gasmeteraccomodations" Value="{m:Exp Str=userfiles.f_gasmeteraccomodations\=>Completed}" />
             			</a:Data.Prop>
             		</TextBox>-->
-            		<sdk:DatePicker SelectedDate="{m:Bind Path=f_mrdate}" Grid.Column="3" Margin="0,6" Grid.Row="5" VerticalAlignment="Center">
+            		<sdk:DatePicker SelectedDate="{m:Bind Path=f_mrdate}" IsEnabled="False" Grid.Column="3" Margin="0,6" Grid.Row="5" VerticalAlignment="Center">
             			<a:Data.Prop>
             				<o:PropertySetter PropertyName="f_mrdate"
             					Default="{m:Exp Str=SysTime.Now}"/>
             			</a:Data.Prop>
             		</sdk:DatePicker>	
-            		<TextBox Text="{m:Bind Path=f_mrperson}" Grid.Column="1" Margin="0,6" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Center">
+            		<TextBox Text="{m:Bind Path=f_mrperson}" Grid.Column="1" IsReadOnly="True" Margin="0,6" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Center">
             			<a:Data.Prop>
             				<o:PropertySetter PropertyName="f_mrperson" />
             			</a:Data.Prop>

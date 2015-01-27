@@ -49,24 +49,50 @@
 			</b:BatchExcuteAction>
 		</m:ResourceLoad>
 		<Grid >
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="3*"/>
-				<ColumnDefinition Width="7*"/>
-			</Grid.ColumnDefinitions>
-			<c:BusyIndicatorEx BusyContent="正在查询，请稍等" IsBusy="{m:Exp Str=userfiles.ItemsSource.IsBusy}" >
-				<toolkit:DockPanel >
-					<toolkit:DockPanel x:Name="userfilesearch"  Background="#FFCFEFFF" toolkit:DockPanel.Dock="Top" Margin="0,0,0,3" >
-						<a:Data.Context>
-							<o:SearchObject />        	
-						</a:Data.Context>
-						<TextBlock TextWrapping="Wrap" Text="用户编号：" Margin="5,6,0,6"/>
-						<TextBox TextWrapping="Wrap" Text="{m:Bind Path=f_userid}" a:ControlAttach.DefaultButton="searchbutton" Height="25" Width="150" Margin="0,3" >
-							<a:Data.Prop>
-								<o:PropertySetter PropertyName="f_userid" Operator="f_userid like 'this%'"/>               
-							</a:Data.Prop>
-						</TextBox>
-						<Button Content="查  询" x:Name="searchbutton" Click="{m:Exp Str=userfilesearch.DataContext.Search()}" Margin="0,5,5,0" HorizontalAlignment="Right" Width="50" />
-					</toolkit:DockPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="7*"/>
+            </Grid.ColumnDefinitions>            
+            <c:BusyIndicatorEx BusyContent="正在查询，请稍等" IsBusy="{m:Exp Str=userfiles.ItemsSource.IsBusy}" >
+                <toolkit:DockPanel >
+                    <toolkit:DockPanel x:Name="userfilesearch"  Background="#FFCFEFFF" toolkit:DockPanel.Dock="Top" Margin="0,0,0,3" >
+                        <a:Data.Context>
+                            <o:SearchObject />
+                        </a:Data.Context>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="28"></RowDefinition>
+                                <RowDefinition Height="28"></RowDefinition>
+                                <RowDefinition Height="28"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock TextWrapping="Wrap"  Text="用户编号：" TextAlignment="Right"/>
+                            <TextBox TextWrapping="Wrap"  Text="{m:Bind Path=f_userid}" Grid.Column="1" a:ControlAttach.DefaultButton="searchbutton" Height="25" Width="150" >
+                                <a:Data.Prop>
+                                    <o:PropertySetter PropertyName="f_userid" Operator="f_userid like 'this%'"/>
+                                </a:Data.Prop>
+                            </TextBox>
+                            <TextBlock TextWrapping="Wrap"  Text="补打日期从：" Grid.Row="1" Margin="5,6,0,6"/>
+                            <sdk:DatePicker Name="tj4"  SelectedDate="{m:Bind Path=f_yytdate1}" Grid.Row="1" Grid.Column="1" a:ControlAttach.DefaultButton="searchbutton" Width="Auto" Margin="0,2,0,1" Height="25" HorizontalAlignment="Stretch" >
+                                <a:Data.Prop>
+                                    <!-- Value="{m:Exp Str=SysTime.Today}"-->
+                                    <o:PropertySetter PropertyName="f_yytdate1" 
+											Operator="f_reversaldate >= substring('this',1,10)" />
+                                </a:Data.Prop>
+                            </sdk:DatePicker>
+                            <TextBlock TextWrapping="Wrap"  Grid.Row="2" Text="到" Margin="5,6,0,6" TextAlignment="Center"/>
+                            <sdk:DatePicker Name="tj8" SelectedDate="{m:Bind Path=f_yytdate2}" Grid.Row="2" Grid.Column="1" a:ControlAttach.DefaultButton="searchbutton" Width="Auto" Margin="0,2,0,1" Height="25" Grid.ColumnSpan="1" >
+                                <a:Data.Prop>
+                                    <o:PropertySetter PropertyName="f_yytdate2"  
+											Operator="f_reversaldate ^= substring('this',1,10) + ' 23:59:59'" />
+                                </a:Data.Prop>
+                            </sdk:DatePicker>
+                        </Grid>
+                        <Button Content="查  询" x:Name="searchbutton" Click="{m:Exp Str=userfilesearch.DataContext.Search()}" Margin="0,5,5,0" HorizontalAlignment="Right" Width="50" />
+                        </toolkit:DockPanel>
 					<toolkit:DockPanel   Background="#FFC3E4FD" toolkit:DockPanel.Dock="Bottom" Height="33">
 						<TextBlock TextWrapping="Wrap" Margin="5" Text="{m:Exp Str=$共\{userfiles.ItemsSource.Count\}项}" Width="Auto" HorizontalAlignment="Stretch" Foreground="#FF140000" Height="33"/>
 						
@@ -75,7 +101,7 @@
 						AutoGenerateColumns="False" Width="Auto" Background="{x:Null}" IsReadOnly="True" >
 						<a:Data.Items>
 							<o:PagedObjectList Name="userfileslist" WebClientInfo="{StaticResource dbclient}"
-								Path="{m:Exp Str=$from t_bucardfapiao where \{userfilesearch.DataContext.Condition\} and f_reversaldate \=\'\{SysTime.Today.ToString($yyyy-MM-dd$)\}\'}"
+								Path="{m:Exp Str=$from t_bucardfapiao where \{userfilesearch.DataContext.Condition\}}"
     						    IsOld="{m:Exp Str=SaveAction.State\=\=$End$ or userfile.DataContext.State\=\=$End$ }"
 								PageIndex="{m:Exp Str=pager.PageIndex}" PageSize="{m:Exp Str=pager.PageSize}" SumNames="id"/>
 						</a:Data.Items>
@@ -88,7 +114,7 @@
 							<sdk:DataGridTextColumn Header="卡编号" Binding="{Binding f_cardnumber}"/>
 							<sdk:DataGridTextColumn Header="新卡编号" Binding="{Binding f_newcardnumber}"/>
 							<sdk:DataGridTextColumn Header="补打日期" Binding="{Binding f_reversaldate, StringFormat=yyyy-MM-dd}"/>
-							<sdk:DataGridTextColumn Header="补打时间" Binding="{Binding f_reversaltime, StringFormat=yyyy-MM-dd}"/>
+                            <sdk:DataGridTextColumn Header="补打时间" Binding="{Binding f_reversaltime, StringFormat=hh:mm:ss tt}"/>
 						</sdk:DataGrid.Columns>
 					</sdk:DataGrid>
 					<!--提交按钮-->
@@ -103,7 +129,7 @@
 						<toolkit:DockPanel toolkit:DockPanel.Dock="Bottom"  Background="#FFC3E4FD" >
 							<StackPanel Orientation="Horizontal">
 								<Button x:Name="save" Content="保  存" Margin="5,0,5,5" 
-									IsEnabled="{m:Exp Str=userfile.DataContext.IsModified and !userfile.DataContext.HasErrors}"
+									IsEnabled="{m:Exp Str=userfile.DataContext.f_userid!\=null and userfile.DataContext.IsModified and !userfile.DataContext.HasErrors}"
 									Click="{m:Exp Str=SaveAction.Invoke()}" Width="50" Height="28" VerticalAlignment="Bottom" />
 								<Button Content="撤  销" Margin="5,0,5,5" FontSize="12" Click="{m:Exp Str=userfile.DataContext.New()}" Width="50" Height="28" VerticalAlignment="Bottom"/>
 							</StackPanel>

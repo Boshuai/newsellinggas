@@ -223,7 +223,7 @@ namespace Com.Aote.Pages
             }
             if (f_changedate.SelectedDate != null)
             {
-                kbfe.SetPropertyValue("f_changedate", f_changedate.SelectedDate, false);
+                kbfe.SetPropertyValue("f_changedate", f_changedate.SelectedDate.ToString(), false);
             }
                 kbfe.Name = "t_upkeep";
           kbfe.Completed += kbfe_Completed;

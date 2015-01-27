@@ -35,6 +35,9 @@
             </Grid.ColumnDefinitions>
             <c:BusyIndicatorEx BusyContent="正在查询，请稍等" IsBusy="{m:Exp Str=applys.ItemsSource.IsBusy}">
                 <toolkit:DockPanel >
+                    <a:Data.Context>
+                        <o:SearchObject  ></o:SearchObject>
+                    </a:Data.Context>
                     <Grid Background="#FFDBE4F3" toolkit:DockPanel.Dock="Top"  Name="applysearch">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>

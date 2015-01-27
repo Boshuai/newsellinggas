@@ -96,7 +96,7 @@
         						<o:PropertySetter PropertyName="f_username" Operator="f_username like 'this%'"/>               
         					</a:Data.Prop>
         				</TextBox>
-        				<Button Content="查 询" x:Name="searchbutton" Grid.Column="2" Grid.Row="2" Click="{m:Exp Str=applysearch.DataContext.Search()}" Margin="0,0,64,1" HorizontalAlignment="Right" Width="50"/>
+        				<Button Content="查 询" x:Name="searchbutton" Grid.Column="2" Grid.Row="2" Click="{m:Exp Str=applysearch.DataContext.Search()}" Margin="0,0,45,1" HorizontalAlignment="Right" Width="60"/>
         				<TextBlock TextWrapping="Wrap" Grid.Row="2" Text="用户地址：" HorizontalAlignment="Right" Margin="0,1,0,-1"/>
         				<TextBox TextWrapping="Wrap" Grid.Row="2" Height="25" Grid.Column="1" Text="{m:Bind Path=f_address}" a:ControlAttach.DefaultButton="searchbutton" Margin="0,1,0,2" VerticalAlignment="Stretch">
         					<a:Data.Prop>
@@ -109,7 +109,7 @@
         			AutoGenerateColumns="False"  IsReadOnly="True">
         			<a:Data.Items>
         				<o:PagedObjectList x:Name="applyslist" WebClientInfo="{StaticResource dbclient}"
-        					Path="{m:Exp Str=$from t_userfiles where \{applysearch.DataContext.Condition\}}"
+        					Path="{m:Exp Str=$from t_userfiles where \{applysearch.DataContext.Condition\} and f_userstate \=\'正常\'}"
         					IsOld="{m:Exp Str=print.State\=\=$End$}"
         					PageIndex="{m:Exp Str=pager.PageIndex}" PageSize="{m:Exp Str=pager.PageSize}" SumNames=","/>
         			</a:Data.Items>
@@ -267,7 +267,7 @@
             				<o:PropertySetter PropertyName="f_notnull" />
             			</a:Data.Prop>
             		</TextBox>
-            		<sdk:DatePicker SelectedDate="{m:Bind Path=f_f_tdate}" Grid.Column="3" Margin="2,3,0,2" Grid.Row="8" VerticalAlignment="Stretch" Grid.ColumnSpan="1" Height="25">
+            		<sdk:DatePicker SelectedDate="{m:Bind Path=f_f_tdate}" Grid.Column="3" IsEnabled="False" Margin="2,3,0,2" Grid.Row="8" VerticalAlignment="Stretch" Grid.ColumnSpan="1" Height="25">
             			<a:Data.Prop>
             				<o:PropertySetter PropertyName="f_f_tdate"
             					Default="{m:Exp Str=SysTime.Now}"/>
@@ -358,68 +358,72 @@
         </toolkit:BusyIndicator>
 		<sdk:DataPager x:Name="pager" Source="{Binding Path=ItemsSource.Count,ElementName=applys,Converter={StaticResource DataPagerConverter}}"  Margin="1,0,0,44" PageSize="22" Height="24" VerticalAlignment="Bottom"/>
     </Grid>
-	<Grid x:Name="aofengprint" Background="b" Margin="-1645,0,1194,-430" Height="346" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" d:LayoutOverrides="VerticalAlignment" RenderTransformOrigin="0.5,0.5">
-			<a:Data.Context>
-				<o:GeneralObject  x:Name="kabiaoprint" WebClientInfo="{StaticResource dbclient}" EntityType="t_sellinggas"  />
-			</a:Data.Context>
-		
-			<Path Data="M17,186 L492.26941,186" Height="1" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" VerticalAlignment="Top" Margin="215,54.704,0,0" HorizontalAlignment="Left" Width="476.269" d:LayoutOverrides="HorizontalAlignment"/>
-			<Path Data="M72,0 L72,276.02899" Margin="643.256,231.715,0,114.285" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1" d:LayoutOverrides="HorizontalAlignment"/>
-			<Path Data="M17,186 L492.26941,186" Height="1" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" VerticalAlignment="Top" Margin="18.667,82.704,0,0" HorizontalAlignment="Left" Width="733.463" d:LayoutOverrides="HorizontalAlignment"/>
-			<Path Data="M72,0 L72,276.02899" Margin="18.631,82.602,0,67.294" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1" d:LayoutOverrides="VerticalAlignment"/>
-			<Path Data="M17,186 L492.26941,186" Height="1" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" VerticalAlignment="Top" Margin="18.667,121.038,0,0" HorizontalAlignment="Left" Width="733.463" d:LayoutOverrides="HorizontalAlignment"/>
-			<Path Data="M72,0 L72,276.02899" Margin="129.623,82.602,0,67.294" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1" d:LayoutOverrides="VerticalAlignment"/>
-			<Path Data="M17,186 L492.26941,186" Height="1" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" VerticalAlignment="Top" Margin="18.667,158.706,0,0" HorizontalAlignment="Left" Width="733.463" d:LayoutOverrides="HorizontalAlignment"/>
-			<Path Data="M72,0 L72,276.02899" Margin="751.892,82.602,0,67.294" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment"/>
-			<Path Data="M17,186 L492.26941,186" Height="1" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" VerticalAlignment="Bottom" Margin="18.667,0,0,146.285" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" HorizontalAlignment="Left" Width="732.463"/>
-			<Path Data="M72,0 L72,276.02899" Margin="284.97,82.602,0,0" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1" Height="196.104" VerticalAlignment="Top"/>
-			<Path Data="M72,0 L72,276.02899" Margin="382.306,84.602,0,0" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1" Height="194.104" VerticalAlignment="Top"/>
-			<Path Data="M17,186 L492.26941,186" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" Margin="18.667,0,0,104.294" Height="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="733.463" d:LayoutOverrides="HorizontalAlignment"/>
-			<Path Data="M72,0 L72,276.02899" Margin="637.256,240.602,0,66.398" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="2" RenderTransformOrigin="0.5,0.5" d:LayoutOverrides="HorizontalAlignment">
-				<Path.RenderTransform>
-					<CompositeTransform ScaleX="-1"/>
-				</Path.RenderTransform>
-			</Path>
-			<Path Data="M72,0 L72,276.02899" Margin="530.987,240.706,0,67.294" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1" d:LayoutOverrides="HorizontalAlignment"/>
-			<sdk:Label Height="20" Margin="250,31,0,0" Content="阿拉善盟昆仑燃气有限责任公司 收 费 票 据" VerticalAlignment="Top" FontSize="15" HorizontalAlignment="Left" Width="342" d:LayoutOverrides="HorizontalAlignment" />
-			<sdk:Label  Content="年" HorizontalAlignment="Left" Height="16" Margin="113,61,0,0"  VerticalAlignment="Top" Width="17"/>
-			<sdk:Label  Content="月" HorizontalAlignment="Left" Height="16" Margin="161,62,0,0"  VerticalAlignment="Top" Width="15"/>
-			<sdk:Label HorizontalAlignment="Left" Content="日" Height="16" Margin="212,62,0,0" VerticalAlignment="Top" Width="13"/>
-			<sdk:Label HorizontalAlignment="Left" Content="用户编号" FontSize="15" Height="22" Margin="39,91,0,0" VerticalAlignment="Top" Width="63"/>
-			<sdk:Label HorizontalAlignment="Left" Content="用户类型" FontSize="15" Height="22" Margin="40,130,0,0" VerticalAlignment="Top" Width="63"/>
-			<sdk:Label HorizontalAlignment="Left" Content="收费类型" FontSize="15" Height="22" Margin="35,167,0,0" VerticalAlignment="Top" Width="67"/>
-			<sdk:Label Content="费用(小写)" FontSize="15" Margin="33,209,0,116" HorizontalAlignment="Left" Width="85" d:LayoutOverrides="HorizontalAlignment"/>
-			<sdk:Label Content="用户姓名" FontSize="15" Height="22" Margin="295,92,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="82"/>
-			<sdk:Label HorizontalAlignment="Left" Content="用户地址" FontSize="15" Height="22" Margin="295,130,0,0" VerticalAlignment="Top" Width="63"/>
-			<sdk:Label Content="操  作  员" FontSize="15" Margin="546,0,0,74" Height="22" VerticalAlignment="Bottom" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" HorizontalAlignment="Left" Width="75"/>
-			<!--sdk:Label  Content="网　点"   HorizontalAlignment="Left" Height="25" Margin="301,0,0,137" FontSize="15" VerticalAlignment="Bottom" Width="61" d:LayoutOverrides="VerticalAlignment"/>
+        <Grid x:Name="aofengprint" Background="b" Margin="-1645,0,1194,-430" Height="346" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" d:LayoutOverrides="VerticalAlignment" RenderTransformOrigin="0.5,0.5">
+            <a:Data.Context>
+                <o:GeneralObject  x:Name="kabiaoprint" WebClientInfo="{StaticResource dbclient}" EntityType="t_sellinggas"  />
+            </a:Data.Context>
+
+            <Path Data="M17,186 L492.26941,186" Height="1" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" VerticalAlignment="Top" Margin="215,54.704,0,0" HorizontalAlignment="Left" Width="476.269" d:LayoutOverrides="HorizontalAlignment"/>
+            <Path Data="M72,0 L72,276.02899" Margin="643.256,231.715,0,114.285" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1" d:LayoutOverrides="HorizontalAlignment"/>
+            <Path Data="M17,186 L492.26941,186" Height="1" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" VerticalAlignment="Top" Margin="18.667,82.704,0,0" HorizontalAlignment="Left" Width="733.463" d:LayoutOverrides="HorizontalAlignment"/>
+            <Path Data="M72,0 L72,276.02899" Margin="18.631,82.602,0,67.294" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1" d:LayoutOverrides="VerticalAlignment"/>
+            <Path Data="M17,186 L492.26941,186" Height="1" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" VerticalAlignment="Top" Margin="18.667,121.038,0,0" HorizontalAlignment="Left" Width="733.463" d:LayoutOverrides="HorizontalAlignment"/>
+            <Path Data="M72,0 L72,276.02899" Margin="129.623,82.602,0,67.294" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1" d:LayoutOverrides="VerticalAlignment"/>
+            <Path Data="M17,186 L492.26941,186" Height="1" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" VerticalAlignment="Top" Margin="18.667,158.706,0,0" HorizontalAlignment="Left" Width="733.463" d:LayoutOverrides="HorizontalAlignment"/>
+            <Path Data="M72,0 L72,276.02899" Margin="751.892,82.602,0,67.294" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment"/>
+            <Path Data="M17,186 L492.26941,186" Height="1" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" VerticalAlignment="Bottom" Margin="18.667,0,0,146.285" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" HorizontalAlignment="Left" Width="732.463"/>
+            <Path Data="M72,0 L72,276.02899" Margin="284.97,82.602,0,0" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1" Height="196.104" VerticalAlignment="Top"/>
+            <Path Data="M72,0 L72,276.02899" Margin="382.306,84.602,0,0" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1" Height="194.104" VerticalAlignment="Top"/>
+            <Path Data="M17,186 L492.26941,186" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" Margin="18.667,0,0,104.294" Height="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="733.463" d:LayoutOverrides="HorizontalAlignment"/>
+            <Path Data="M72,0 L72,276.02899" Margin="637.256,240.602,0,66.398" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="2" RenderTransformOrigin="0.5,0.5" d:LayoutOverrides="HorizontalAlignment">
+
+                <Path.RenderTransform>
+                    <CompositeTransform ScaleX="-1"/>
+                </Path.RenderTransform>
+            </Path>
+            <Path Data="M72,0 L72,276.02899" Margin="530.987,240.706,0,67.294" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1" d:LayoutOverrides="HorizontalAlignment"/>
+            <Path Data="M72,0 L72,276.02899" Margin="533,82.704,0,223.398" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1"/>
+            <sdk:Label Height="20" Margin="250,31,0,0" Content="阿拉善盟昆仑燃气有限责任公司 收 费 票 据" VerticalAlignment="Top" FontSize="15" HorizontalAlignment="Left" Width="342" d:LayoutOverrides="HorizontalAlignment" />
+            <sdk:Label  Content="年" HorizontalAlignment="Left" Height="16" Margin="113,61,0,0"  VerticalAlignment="Top" Width="17"/>
+            <sdk:Label  Content="月" HorizontalAlignment="Left" Height="16" Margin="161,62,0,0"  VerticalAlignment="Top" Width="15"/>
+            <sdk:Label HorizontalAlignment="Left" Content="日" Height="16" Margin="212,62,0,0" VerticalAlignment="Top" Width="13"/>
+            <sdk:Label HorizontalAlignment="Left" Content="用户编号" FontSize="15" Height="22" Margin="39,91,0,0" VerticalAlignment="Top" Width="63"/>
+            <sdk:Label HorizontalAlignment="Left" Content="用户类型" FontSize="15" Height="22" Margin="40,130,0,0" VerticalAlignment="Top" Width="63"/>
+            <sdk:Label HorizontalAlignment="Left" Content="收费类型" FontSize="15" Height="22" Margin="35,167,0,0" VerticalAlignment="Top" Width="67"/>
+            <sdk:Label Content="费用(小写)" FontSize="15" Margin="33,209,0,116" HorizontalAlignment="Left" Width="85" d:LayoutOverrides="HorizontalAlignment"/>
+            <sdk:Label Content="用户姓名" FontSize="15" Height="22" Margin="295,92,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="82"/>
+            <sdk:Label HorizontalAlignment="Left" Content="用户地址" FontSize="15" Height="22" Margin="295,130,0,0" VerticalAlignment="Top" Width="63"/>
+            <sdk:Label Content="操  作  员" FontSize="15" Margin="546,0,0,74" Height="22" VerticalAlignment="Bottom" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" HorizontalAlignment="Left" Width="75"/>
+            <sdk:Label Content="过户姓名" FontSize="15" Margin="546,0,0,230" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75"/>
+            <!--sdk:Label  Content="网　点"   HorizontalAlignment="Left" Height="25" Margin="301,0,0,137" FontSize="15" VerticalAlignment="Bottom" Width="61" d:LayoutOverrides="VerticalAlignment"/>
 			<sdk:Label HorizontalAlignment="Left" Content="卡号" FontSize="15" Height="22" Margin="43,148,0,0" VerticalAlignment="Top" Width="59"/-->
-			<sdk:Label HorizontalAlignment="Left" Content="公　司" FontSize="15" Height="22" Margin="39,0,0,77" VerticalAlignment="Bottom" Width="59" d:LayoutOverrides="VerticalAlignment"/>
-			<!--sdk:Label Content="气表品牌" FontSize="15" Height="22" Margin="546,151,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="87"/>
+            <sdk:Label HorizontalAlignment="Left" Content="公　司" FontSize="15" Height="22" Margin="39,0,0,77" VerticalAlignment="Bottom" Width="59" d:LayoutOverrides="VerticalAlignment"/>
+            <!--sdk:Label Content="气表品牌" FontSize="15" Height="22" Margin="546,151,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="87"/>
 			<sdk:Label Content="气表型号" FontSize="15" Height="22" Margin="546,185,960,0" VerticalAlignment="Top"/-->
-			
-			<TextBlock Text="{m:Exp Str=SysTime.Now.ToString($yyyy$)}" Grid.Column="0"  HorizontalAlignment="Left" Margin="57,60,0,0" TextWrapping="Wrap" Width="52" Height="18" VerticalAlignment="Top" d:LayoutOverrides="Height, GridBox"/>
-			<TextBlock Text="{m:Exp Str=SysTime.Now.ToString($MM$)}"  HorizontalAlignment="Left" Margin="133,62,0,0" TextWrapping="Wrap" Width="25" Height="18" VerticalAlignment="Top" d:LayoutOverrides="Height, GridBox"/>
-			<TextBlock Text="{m:Exp Str=SysTime.Now.ToString($dd$)}"  HorizontalAlignment="Left" Margin="181,62,0,0" TextWrapping="Wrap" Width="27" Height="18" VerticalAlignment="Top" d:LayoutOverrides="Height, GridBox"/>
-			<!--TextBlock Text="{m:Exp Str=pipeline.DataContext.f_cardid}" Margin="132,150,0,0" TextWrapping="Wrap" Height="20" VerticalAlignment="Top" Grid.ColumnSpan="1" d:LayoutOverrides="Height, GridBox" HorizontalAlignment="Left" Width="142"/-->
-			
-			<TextBlock Text="{m:Exp Str=LoginUser.f_fengongsi}" Margin="131,0,0,75" TextWrapping="Wrap" Height="20" VerticalAlignment="Bottom" Grid.ColumnSpan="1" d:LayoutOverrides="VerticalAlignment, Height, GridBox" HorizontalAlignment="Left" Width="154"/>
-			
-			<TextBlock Text="{m:Exp Str=ghfobj.value}" Margin="132,211,0,115" TextWrapping="Wrap" Height="20" d:LayoutOverrides="HorizontalAlignment, GridBox" HorizontalAlignment="Left" Width="153"/>
-			<TextBlock Text="{m:Exp Str=userfiles.f_username\=&gt;Completed}"  HorizontalAlignment="Left" Margin="387,93,0,0"  Width="252" Height="20" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment, Height, GridBox"/>
-			<TextBlock Text="{m:Exp Str=userfiles.f_address\=&gt;Completed}"  HorizontalAlignment="Left" Margin="385,130,0,0"  Width="367" Height="20" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment, Height, GridBox"/>
-			<TextBlock Text="{m:Exp Str=userfiles.f_userid\=&gt;Completed}"  HorizontalAlignment="Left" Margin="132,94,0,0"  Width="149" Height="20" VerticalAlignment="Top" Padding="0,2,0,0" d:LayoutOverrides="Height, GridBox"/>
-			<TextBlock Text="{m:Exp Str=userfiles.f_usertype\=&gt;Completed}"  HorizontalAlignment="Left" Margin="132,131,0,0"  Width="149" Height="20" VerticalAlignment="Top" Padding="0,2,0,0" d:LayoutOverrides="Height, GridBox"/>
-			<TextBlock  HorizontalAlignment="Left" Margin="130,168,0,0"  Width="141" Height="20" VerticalAlignment="Top" Padding="0,2,0,0" d:LayoutOverrides="HorizontalAlignment, Height, GridBox"><Run Text="            "/><Run Text="过户费"/></TextBlock>
-			<TextBlock Text="{m:Exp Str=apply.DataContext.f_toperator}" Margin="645,0,0,76" TextWrapping="Wrap" Height="20" VerticalAlignment="Bottom" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment, Height, GridBox" HorizontalAlignment="Left" Width="107"/>
-			<Path Data="M72,0 L72,276.02899" Margin="639.256,84.602,0,224.962" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1" d:LayoutOverrides="HorizontalAlignment"/>
-			<Path Data="M17,186 L492.26941,186" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" Margin="18.667,0,0,66.294" Height="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="733.463" d:LayoutOverrides="HorizontalAlignment"/>
-			<sdk:Label HorizontalAlignment="Left" Content="网　　点" FontSize="15" Height="22" Margin="295,249,0,0" VerticalAlignment="Top" Width="67"/>
-			<TextBlock Text="{m:Exp Str=LoginUser.f_parentname}" Margin="385,0,0,75" TextWrapping="Wrap" Height="20" VerticalAlignment="Bottom" Grid.ColumnSpan="1" HorizontalAlignment="Left" Width="143" d:LayoutOverrides="VerticalAlignment, Height, GridBox"/>
-			<sdk:Label Content="大　　写" FontSize="15" Margin="293,209,0,116" HorizontalAlignment="Left" Width="72" d:LayoutOverrides="HorizontalAlignment"/>
-			<TextBlock Text="{m:Exp Str=ghfobj.value.ToChinaMoney()}" Margin="387,211,0,115" TextWrapping="Wrap" Height="20" HorizontalAlignment="Left" Width="253" d:LayoutOverrides="HorizontalAlignment, GridBox"/>
-			
-		</Grid>
+
+            <TextBlock Text="{m:Exp Str=SysTime.Now.ToString($yyyy$)}" Grid.Column="0"  HorizontalAlignment="Left" Margin="57,60,0,0" TextWrapping="Wrap" Width="52" Height="18" VerticalAlignment="Top" d:LayoutOverrides="Height, GridBox"/>
+            <TextBlock Text="{m:Exp Str=SysTime.Now.ToString($MM$)}"  HorizontalAlignment="Left" Margin="133,62,0,0" TextWrapping="Wrap" Width="25" Height="18" VerticalAlignment="Top" d:LayoutOverrides="Height, GridBox"/>
+            <TextBlock Text="{m:Exp Str=SysTime.Now.ToString($dd$)}"  HorizontalAlignment="Left" Margin="181,62,0,0" TextWrapping="Wrap" Width="27" Height="18" VerticalAlignment="Top" d:LayoutOverrides="Height, GridBox"/>
+            <!--TextBlock Text="{m:Exp Str=pipeline.DataContext.f_cardid}" Margin="132,150,0,0" TextWrapping="Wrap" Height="20" VerticalAlignment="Top" Grid.ColumnSpan="1" d:LayoutOverrides="Height, GridBox" HorizontalAlignment="Left" Width="142"/-->
+
+            <TextBlock Text="{m:Exp Str=LoginUser.f_fengongsi}" Margin="131,0,0,75" TextWrapping="Wrap" Height="20" VerticalAlignment="Bottom" Grid.ColumnSpan="1" d:LayoutOverrides="VerticalAlignment, Height, GridBox" HorizontalAlignment="Left" Width="154"/>
+
+            <TextBlock Text="{m:Exp Str=ghfobj.value}" Margin="132,211,0,115" TextWrapping="Wrap" Height="20" d:LayoutOverrides="HorizontalAlignment, GridBox" HorizontalAlignment="Left" Width="153"/>
+            <TextBlock Text="{m:Exp Str=userfiles.f_username\=&gt;Completed}"  HorizontalAlignment="Left" Margin="387,93,0,0"  Width="141" Height="20" VerticalAlignment="Top"/>
+            <TextBlock Text="{m:Exp Str=userfiles.f_address\=&gt;Completed}"  HorizontalAlignment="Left" Margin="385,130,0,0"  Width="367" Height="20" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment, Height, GridBox"/>
+            <TextBlock Text="{m:Exp Str=userfiles.f_userid\=&gt;Completed}"  HorizontalAlignment="Left" Margin="132,94,0,0"  Width="149" Height="20" VerticalAlignment="Top" Padding="0,2,0,0" d:LayoutOverrides="Height, GridBox"/>
+            <TextBlock Text="{m:Exp Str=userfiles.f_usertype\=&gt;Completed}"  HorizontalAlignment="Left" Margin="132,131,0,0"  Width="149" Height="20" VerticalAlignment="Top" Padding="0,2,0,0" d:LayoutOverrides="Height, GridBox"/>
+            <TextBlock  HorizontalAlignment="Left" Margin="130,168,0,0"  Width="141" Height="20" VerticalAlignment="Top" Padding="0,2,0,0" d:LayoutOverrides="HorizontalAlignment, Height, GridBox"><Run Text="            "/><Run Text="过户费"/></TextBlock>
+            <TextBlock Text="{m:Exp Str=apply.DataContext.f_toperator}" Margin="645,0,0,76" TextWrapping="Wrap" Height="20" VerticalAlignment="Bottom" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment, Height, GridBox" HorizontalAlignment="Left" Width="107"/>
+            <TextBlock Text="{m:Exp Str=apply.DataContext.f_tnewusername}" Margin="645,0,0,232" TextWrapping="Wrap" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="102"/>
+            <Path Data="M72,0 L72,276.02899" Margin="639.256,82.704,0,224.962" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" HorizontalAlignment="Left" Width="1"/>
+            <Path Data="M17,186 L492.26941,186" Stretch="Fill" Stroke="Black" StrokeThickness="1" UseLayoutRounding="False" Margin="18.667,0,0,66.294" Height="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="733.463" d:LayoutOverrides="HorizontalAlignment"/>
+            <sdk:Label HorizontalAlignment="Left" Content="网　　点" FontSize="15" Height="22" Margin="295,249,0,0" VerticalAlignment="Top" Width="67"/>
+            <TextBlock Text="{m:Exp Str=LoginUser.f_parentname}" Margin="385,0,0,75" TextWrapping="Wrap" Height="20" VerticalAlignment="Bottom" Grid.ColumnSpan="1" HorizontalAlignment="Left" Width="143" d:LayoutOverrides="VerticalAlignment, Height, GridBox"/>
+            <sdk:Label Content="大　　写" FontSize="15" Margin="293,209,0,116" HorizontalAlignment="Left" Width="72" d:LayoutOverrides="HorizontalAlignment"/>
+            <TextBlock Text="{m:Exp Str=ghfobj.value.ToChinaMoney()}" Margin="387,211,0,115" TextWrapping="Wrap" Height="20" HorizontalAlignment="Left" Width="253" d:LayoutOverrides="HorizontalAlignment, GridBox"/>
+
+        </Grid>
 	<c:MessageTipObj  Name="submittip" Tip="您确认要提交通气吗？" OK="{m:Exp Str=SubmitAction.Invoke()}" />
 	<c:PrintObj Name="print" IsPrint="{m:Exp Str=SaveAction.State\=\=$End$}" Area="{m:Res Key=aofengprint}" Margin="7,0,547,0"/>
   </Grid>

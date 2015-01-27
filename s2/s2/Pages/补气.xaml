@@ -361,7 +361,7 @@
 											Value="{m:Exp Str=apply.DataContext.f_nextaddgasamount-apply.DataContext.f_pregas}"/>
 									</a:Data.Prop>
 								</TextBox>
-								<sdk:DatePicker SelectedDate="{m:Bind Path=f_addgasdate}" Grid.Column="5" Margin="0,2,0,3" Grid.Row="8"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.ColumnSpan="1" Height="25">
+								<sdk:DatePicker SelectedDate="{m:Bind Path=f_addgasdate}" IsEnabled="False" Grid.Column="5" Margin="0,2,0,3" Grid.Row="8"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.ColumnSpan="1" Height="25">
 									<a:Data.Prop>
 										<o:PropertySetter PropertyName="f_addgasdate"
 											Default="{m:Exp Str=SysTime.Today}"/>
@@ -428,7 +428,7 @@
 								<TextBlock Margin="0" Grid.Row="8" TextWrapping="Wrap" Text="新表脉冲/系数：" Height="25" TextAlignment="Right"/>
 								<TextBox Text="{m:Bind Path=f_newmaichong}" Grid.Column="1" Height="25" Margin="0" Grid.Row="8" TextWrapping="Wrap" VerticalAlignment="Stretch" IsReadOnly="True" Grid.ColumnSpan="1">
 									<a:Data.Prop>
-										<o:PropertySetter PropertyName="f_newmaichong" Value="{m:Exp Str=user.f_maichong}" NotNull="True"/>
+										<o:PropertySetter PropertyName="f_newmaichong" Value="{m:Exp Str=user.f_maichong}"/>
 									</a:Data.Prop>
 								</TextBox>
 								<TextBlock Margin="5.5,2,-0.5,3" Grid.Row="2" TextWrapping="Wrap" Text="卡　　号：" Height="25" TextAlignment="Right" Grid.Column="2"/>

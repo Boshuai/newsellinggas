@@ -24,7 +24,7 @@
 					 PageIndex="{m:Exp Str=pager.PageIndex}" PageSize="{m:Exp Str=pager.PageSize}"
 					  SumNames=","/>
             <!--抄表对象-->
-            <o:GeneralObject Name="scbdw" WebClientInfo="{StaticResource dbclient}"   EntityType="t_myfaka"
+            <o:GeneralObject Name="scbdw" WebClientInfo="{StaticResource dbclient}"   EntityType="t_myfaka"              
 				  IsInit="{m:Exp Str=SaveAction.State\=\=$End$}" Source="{m:Exp Str=FaKaUserUnits.SelectedItem}"/>
             <!--批处理-->
             <b:BatchExcuteAction Name="SaveAction"  WebClientInfo="{StaticResource dbclient}">
@@ -218,9 +218,9 @@
                         <a:Data.Prop>
                             <o:PropertySetter PropertyName="f_updatenote" NotNull="True"/>
                         </a:Data.Prop>
-                    </TextBox>
+                    </TextBox>                  
                     <Button Content="保存"	
-                            
+                    IsEnabled="{m:Exp Str=FaKaUserUnits.SelectedItem!\=null and !FaKaUserUnit.DataContext.HasErrors}"      
 					Click="Button_Click" RenderTransformOrigin="1.7,0.6" Grid.Row="18" Grid.RowSpan="1"  Height="25" VerticalAlignment="Bottom" Grid.Column="3" HorizontalAlignment="Left" Width="62"/>
                     <Button Content="撤销" Margin="0,0,75,0" Click="{m:Exp Str=FaKaUserUnit.DataContext.New()}" Grid.Row="18" Grid.Column="1"  Grid.RowSpan="1" HorizontalAlignment="Right" Width="66"  Height="25" VerticalAlignment="Bottom"/>
 

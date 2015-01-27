@@ -98,7 +98,7 @@
                     <!--按钮-->
                     <toolkit:DockPanel toolkit:DockPanel.Dock="Bottom" HorizontalAlignment="Center" VerticalAlignment="Center" >
                         <Button x:Name="save" Content="保  存" Margin="5" 
-							IsEnabled="{m:Exp Str=!cardrepeatset.HasErrors }" 
+							IsEnabled="{m:Exp Str=userfiles.SelectedItem!\=null and !cardrepeatset.HasErrors }" 
 							Click="{m:Exp Str='SaveAction.Invoke()'}" Width="50" />
                         <Button x:Name="cancel" Content="撤  销" Margin="5" Click="{m:Exp Str=cardrepeat.DataContext.New();userfiles.SelectedItem\=null}" Width="50"/>
                     </toolkit:DockPanel>

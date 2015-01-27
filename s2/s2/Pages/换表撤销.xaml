@@ -199,12 +199,12 @@
                                 <o:PropertySetter PropertyName="f_phone" />
                             </a:Data.Prop>
                         </TextBox>
-                        <TextBox Text="{m:Bind Path=f_gasmetermanufacturers}" Grid.Column="1" Margin="0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Stretch" IsReadOnly="True" Height="25">
+                        <TextBox Text="{m:Bind Path=f_gasmetermanufacturers}" x:Name="ui_gasmetermanufacturers" Grid.Column="1" Margin="0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Stretch" IsReadOnly="True" Height="25">
                             <a:Data.Prop>
                                 <o:PropertySetter PropertyName="f_gasmetermanufacturers"  />
                             </a:Data.Prop>
                         </TextBox>
-                        <TextBox Text="{m:Bind Path=f_gaswatchbrand}" Grid.Column="3" Margin="0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Stretch" IsReadOnly="True" Height="25">
+                        <TextBox Text="{m:Bind Path=f_gaswatchbrand}" x:Name="ui_gaswatchbrand" Grid.Column="3" Margin="0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Stretch" IsReadOnly="True" Height="25">
                             <a:Data.Prop>
                                 <o:PropertySetter PropertyName="f_gaswatchbrand" />
                             </a:Data.Prop>
@@ -219,7 +219,7 @@
                                 <o:PropertySetter PropertyName="f_meternumber"  />
                             </a:Data.Prop>
                         </TextBox>
-                        <TextBox Text="{m:Bind Path=f_metertype}" Grid.Column="3" Margin="0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Stretch" IsReadOnly="True" Height="25" Grid.ColumnSpan="1">
+                        <TextBox Text="{m:Bind Path=f_metertype}" x:Name="ui_metertype" Grid.Column="3" Margin="0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Stretch" IsReadOnly="True" Height="25" Grid.ColumnSpan="1">
                             <a:Data.Prop>
                                 <o:PropertySetter PropertyName="f_metertype"  />
                             </a:Data.Prop>

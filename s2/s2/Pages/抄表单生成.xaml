@@ -18,30 +18,26 @@
 	mc:Ignorable="d" FontSize="13"
 	x:Class="Com.Aote.Pages.抄表单生成" d:DesignWidth="800" d:DesignHeight="600">
 
-	<Grid x:Name="LayoutRoot">
-		<m:ResourceLoad Margin="0,0,-12,0">
-			<o:GeneralObject Name="test1" EntityType="t_singlevalue" WebClientInfo="{StaticResource dbclient}"  >
+    <Grid x:Name="LayoutRoot">
+        <m:ResourceLoad Margin="0,0,-12,0">
+            <o:GeneralObject Name="test1" EntityType="t_singlevalue" WebClientInfo="{StaticResource dbclient}"  >
                 <o:PropertySetter PropertyName="url" Value="{m:Exp Str=daninfos.ItemsSource.Path.ReplaceStr($%|%25$)}" />
             </o:GeneralObject>
-			
-			<!--查询出来的档案转换为稽查信息-->
-			<o:ExcelObj Name="excel" Bind="Index,f_userid,f_username,f_usertype,lastinputgasnum,f_gaswatchbrand,f_metertype,f_address,f_districtname,f_apartment,f_phone,f_cumulativepurchase,f_metergasnums,f_dateofopening,lastinputdate" Source="{m:Exp Str=daninfos}"/>
-			
-			<!--查询条件对象-->						
-			<o:SearchObject Name="search"/>        	
-			
-		    <!--用户档案列表-->
-			<o:PagedObjectList Name="userfiles" WebClientInfo="{StaticResource dbclient}"
+            <!--查询条件对象-->
+            <o:SearchObject Name="search"/>
+
+            <!--用户档案列表-->
+            <o:PagedObjectList Name="userfiles" WebClientInfo="{StaticResource dbclient}"
 				MultiPath="{m:Exp Str=$from t_userfiles where f_userstate\=\'正常\' and f_gasmeterstyle\=\'机表\' and \{search.Condition\}}" 
 				Path="{m:Exp Str=$from t_userfiles where f_userstate\=\'正常\' and f_gasmeterstyle\=\'机表\' and \{search.Condition\} order by f_address}" 
 				PageIndex="{m:Exp Str=pager.PageIndex}" PageSize="{m:Exp Str=pager.PageSize}" SumNames=","/>
-			<!--删除抄表单-->
-			<b:HQLAction Name="DeleteHandplan" WebClientInfo="{StaticResource dbclient}" Type="sql"
+            <!--删除抄表单-->
+            <b:HQLAction Name="DeleteHandplan" WebClientInfo="{StaticResource dbclient}" Type="sql"
 			HQL="{m:Exp Str=$
 			delete from t_handplan where f_state \=\'未抄表\' and shifoujiaofei \=\'否\' and \{search.Condition\}
 			$}"/>
-			<!--根据用户档案的计划月份产生抄表单-->
-			<b:HQLAction Name="InsertHandplan" WebClientInfo="{StaticResource dbclient}" Type="sql" 
+            <!--根据用户档案的计划月份产生抄表单-->
+            <b:HQLAction Name="InsertHandplan" WebClientInfo="{StaticResource dbclient}" Type="sql" 
 			HQL="{m:Exp Str=$
 			insert into t_handplan(f_userid\, f_username\, lastinputgasnum\, f_gaswatchbrand\, f_metertype\,
 				f_address\, f_districtname\, f_usertype\, f_gasprice\, f_gaspricetype\, f_dibaohu\, f_apartment\,
@@ -53,82 +49,83 @@
 				f_zerenbumen\, \'未抄表\'\, \'否\'\, id
 			from t_userfiles where f_userstate\=\'正常\' and f_gasmeterstyle\=\'机表\' and \{search.Condition\} and f_userid not in
 			(select distinct f_userid from t_handplan where f_state\=\'未抄表\')}"/>
-			<!--生成抄表单-->
-			<b:BatchExcuteAction Name="CreateHandplan" WebClientInfo="{StaticResource dbclient}">
-				<b:BatchInfo Source="{m:Exp Str=DeleteHandplan}" MethodName="InvokeToJson"/>
-				<b:BatchInfo Source="{m:Exp Str=InsertHandplan}" MethodName="InvokeToJson"/>
-			</b:BatchExcuteAction>
-		</m:ResourceLoad>
+            <!--生成抄表单-->
+            <b:BatchExcuteAction Name="CreateHandplan" WebClientInfo="{StaticResource dbclient}">
+                <b:BatchInfo Source="{m:Exp Str=DeleteHandplan}" MethodName="InvokeToJson"/>
+                <b:BatchInfo Source="{m:Exp Str=InsertHandplan}" MethodName="InvokeToJson"/>
+            </b:BatchExcuteAction>
+        </m:ResourceLoad>
 
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="10*"/>
-						<ColumnDefinition Width="0*"/>
-					</Grid.ColumnDefinitions>
-					<c:BusyIndicatorEx BusyContent="正在查询，请稍等" IsBusy="{m:Exp Str=userfiles.IsBusy or CreateHandplan.IsBusy}">
-						<toolkit:DockPanel>
-							<StackPanel x:Name="daninfosearch" DataContext="{m:Exp Str=search}" toolkit:DockPanel.Dock="Top" Margin="0,0,0,3" Background="#FFCFEFFF" Width="Auto" HorizontalAlignment="Stretch" Orientation="Horizontal" >
-						<Button Content="生成抄表单" x:Name="saveButton" Grid.Column="9" Margin="0" FontSize="14" HorizontalAlignment="Right" Click="{m:Exp Str=CreateHandplan.Invoke()}" />
-								<TextBlock TextWrapping="Wrap" Text="小区名称："  Margin="16,0,0,0" TextAlignment="Right" Grid.Column="2" VerticalAlignment="Center" />
-								<TextBox  TextWrapping="Wrap"  Grid.Row="0" Grid.Column="3" Text="{m:Bind Path=f_districtname}" Width="84" Margin="0" Height="25" Grid.ColumnSpan="1"  HorizontalAlignment="Right" >
-									<a:Data.Prop>
-										<o:PropertySetter PropertyName="f_districtname"  Operator="f_districtname like 'this%'"/>          
-									</a:Data.Prop>
-								</TextBox>
-								<TextBlock TextWrapping="Wrap" Text="抄 表 员："  Margin="0" Height="25" TextAlignment="Right" Width="80" d:LayoutOverrides="Height, VerticalMargin" />
-								<ComboBox x:Name="tjczy"  SelectedValue="{m:Bind Path=f_inputtor}" ItemsSource="{m:Exp Str=chaobiaoyuanlist}"  Margin="0" DisplayMemberPath="name" SelectedValuePath="name"  Height="25" HorizontalAlignment="Stretch" Width="100" d:LayoutOverrides="Height, VerticalMargin">
-									<a:Data.Prop>
-										<o:PropertySetter PropertyName="f_inputtor"  Operator="f_inputtor = 'this'"/>          
-									</a:Data.Prop>
-								</ComboBox>
-								<TextBlock TextWrapping="Wrap" Text="地址："  Margin="16,0,0,0" TextAlignment="Right" Grid.Column="2" VerticalAlignment="Center" />
-								<TextBox  TextWrapping="Wrap"  Grid.Row="0" Grid.Column="3" Text="{m:Bind Path=f_address}" Width="84" Margin="0" Height="25" Grid.ColumnSpan="1"  HorizontalAlignment="Right" >
-									<a:Data.Prop>
-										<o:PropertySetter PropertyName="f_address"  Operator="f_address like 'this%'"/>          
-									</a:Data.Prop>
-								</TextBox>
-								<TextBlock TextWrapping="Wrap" Text="卡号："  Margin="10,0,0,0" Height="25" TextAlignment="Right" HorizontalAlignment="Left" />
-								<TextBox x:Name="tjwhf_Copy" TextWrapping="Wrap" Text="{m:Bind Path=f_cardid}" Width="80" Margin="0" Height="25" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
-									<a:Data.Prop>
-										<o:PropertySetter PropertyName="f_cardid"  Operator="f_cardid = 'this'"/>           
-									</a:Data.Prop>
-								</TextBox>
-								<TextBlock TextWrapping="Wrap" Text="用户编号："  Margin="10,0,0,0" Height="25" TextAlignment="Right" HorizontalAlignment="Left" />
-								<TextBox x:Name="tjwhf_Copy1" TextWrapping="Wrap" Text="{m:Bind Path=f_userid}" Width="80" Margin="0" Height="25" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
-									<a:Data.Prop>
-										<o:PropertySetter PropertyName="f_userid"  Operator="f_userid = 'this'"/>           
-									</a:Data.Prop>
-								</TextBox>
-								<Button Content=" 查  询" x:Name="dansearchbutton" Grid.Column="9" Click="{m:Exp Str=daninfosearch.DataContext.Search()}" Margin="20,0,0,0" FontSize="14" Width="54" HorizontalAlignment="Left"  />
-								<HyperlinkButton x:Name="annex"  Content="导出Excel"  NavigateUri="{m:Exp Str=$\{dbclient.BaseAddress\}/excel/\{test1.url\}/\{daninfos.ItemsSource.Count\}/f_userid|f_username|f_address|f_phone|f_inputtor|f_meternumber|lastinputdate|lastinputgasnum$}" TargetName="_blank" 	Margin="20,0,0,0" Background="white" Grid.Column="9" Width="60" d:LayoutOverrides="Width" VerticalAlignment="Center" />
-								
-								
-							</StackPanel>
-					
-							<toolkit:DockPanel   Background="#FFC3E4FD" toolkit:DockPanel.Dock="Bottom" Height="24">
-								<Grid>
-								<sdk:DataPager x:Name="pager" Source="{Binding ItemsSource.Count, Converter={StaticResource DataPagerConverter}, ElementName=daninfos}" Margin="0,0,0,0" PageSize="30" toolkit:DockPanel.Dock="Top" Height="24"   />
-								<TextBlock TextWrapping="Wrap"  Margin="0,0,303,-1" Text="{m:Exp Str=$共\{daninfos.ItemsSource.Count\}项}"   Foreground="#FF140000" Width="450" toolkit:DockPanel.Dock="Bottom" Height="25" HorizontalAlignment="Right" TextAlignment="Right" />
-								</Grid>
-							</toolkit:DockPanel>
-					
-							<sdk:DataGrid x:Name="daninfos"  Margin="0,0,0,3"   IsReadOnly="True"
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="0*"/>
+            </Grid.ColumnDefinitions>
+            <c:BusyIndicatorEx BusyContent="正在查询，请稍等" IsBusy="{m:Exp Str=toExcel.IsBusy or userfiles.IsBusy or CreateHandplan.IsBusy}">
+                <toolkit:DockPanel>
+                    <StackPanel x:Name="daninfosearch" DataContext="{m:Exp Str=search}" toolkit:DockPanel.Dock="Top" Margin="0,0,0,3" Background="#FFCFEFFF" Width="Auto" HorizontalAlignment="Stretch" Orientation="Horizontal" >
+                        <Button Content="生成抄表单" x:Name="saveButton" Grid.Column="9" Margin="0" FontSize="14" HorizontalAlignment="Right" Click="{m:Exp Str=CreateHandplan.Invoke()}" />
+                        <TextBlock TextWrapping="Wrap" Text="小区名称："  Margin="16,0,0,0" TextAlignment="Right" Grid.Column="2" VerticalAlignment="Center" />
+                        <TextBox  TextWrapping="Wrap"  Grid.Row="0" Grid.Column="3" Text="{m:Bind Path=f_districtname}" Width="84" Margin="0" Height="25" Grid.ColumnSpan="1"  HorizontalAlignment="Right" >
+                            <a:Data.Prop>
+                                <o:PropertySetter PropertyName="f_districtname"  Operator="f_districtname like 'this%'"/>
+                            </a:Data.Prop>
+                        </TextBox>
+                        <TextBlock TextWrapping="Wrap" Text="抄 表 员："  Margin="0" Height="25" TextAlignment="Right" Width="80" d:LayoutOverrides="Height, VerticalMargin" />
+                        <ComboBox x:Name="tjczy"  SelectedValue="{m:Bind Path=f_inputtor}" ItemsSource="{m:Exp Str=chaobiaoyuanlist}"  Margin="0" DisplayMemberPath="name" SelectedValuePath="name"  Height="25" HorizontalAlignment="Stretch" Width="100" d:LayoutOverrides="Height, VerticalMargin">
+                            <a:Data.Prop>
+                                <o:PropertySetter PropertyName="f_inputtor"  Operator="f_inputtor = 'this'"/>
+                            </a:Data.Prop>
+                        </ComboBox>
+                        <TextBlock TextWrapping="Wrap" Text="地址："  Margin="16,0,0,0" TextAlignment="Right" Grid.Column="2" VerticalAlignment="Center" />
+                        <TextBox  TextWrapping="Wrap"  Grid.Row="0" Grid.Column="3" Text="{m:Bind Path=f_address}" Width="84" Margin="0" Height="25" Grid.ColumnSpan="1"  HorizontalAlignment="Right" >
+                            <a:Data.Prop>
+                                <o:PropertySetter PropertyName="f_address"  Operator="f_address like 'this%'"/>
+                            </a:Data.Prop>
+                        </TextBox>
+                        <TextBlock TextWrapping="Wrap" Text="卡号："  Margin="10,0,0,0" Height="25" TextAlignment="Right" HorizontalAlignment="Left" />
+                        <TextBox x:Name="tjwhf_Copy" TextWrapping="Wrap" Text="{m:Bind Path=f_cardid}" Width="80" Margin="0" Height="25" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+                            <a:Data.Prop>
+                                <o:PropertySetter PropertyName="f_cardid"  Operator="f_cardid = 'this'"/>
+                            </a:Data.Prop>
+                        </TextBox>
+                        <TextBlock TextWrapping="Wrap" Text="用户编号："  Margin="10,0,0,0" Height="25" TextAlignment="Right" HorizontalAlignment="Left" />
+                        <TextBox x:Name="tjwhf_Copy1" TextWrapping="Wrap" Text="{m:Bind Path=f_userid}" Width="80" Margin="0" Height="25" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+                            <a:Data.Prop>
+                                <o:PropertySetter PropertyName="f_userid"  Operator="f_userid = 'this'"/>
+                            </a:Data.Prop>
+                        </TextBox>
+                        <Button Content=" 查  询" x:Name="dansearchbutton" Grid.Column="9" Click="{m:Exp Str=daninfosearch.DataContext.Search()}" Margin="20,0,0,0" FontSize="14" Width="54" HorizontalAlignment="Left"  />                        
+                        <Button Content="导出Excel" Click="{m:Exp Str=toExcel.ToExcel()}" Grid.Column="9" Width="60" d:LayoutOverrides="Width" VerticalAlignment="Center"/>
+                        <c:Excel x:Name="toExcel" HQL="{m:Exp Str=$\{daninfos.ItemsSource.Path\}}" 
+						Completed="{m:Exp Str=downLoad.Down()}"
+						Path="{m:Exp Str=$\{server.BaseAddress\}/excel/\{daninfos.ItemsSource.Count\}/f_userid:用户编号|f_username:用户名称|f_meternumber:用户地址|f_address:地址|f_usertype:用户类型|f_meternumber:气表编号|f_weizhi:表安装位置|lastinputgasnum:抄表底数$}" Height="30" VerticalAlignment="Top" Width="0"/>
+                        <c:DownLoad x:Name="downLoad" Path="{m:Exp Str=$\{server.BaseAddress\}/file/\{toExcel.FileName\}}" Filter="(*.xls)|*.xls" Height="30" VerticalAlignment="Top" Width="0"/>
+                    </StackPanel>
+                    <toolkit:DockPanel   Background="#FFC3E4FD" toolkit:DockPanel.Dock="Bottom" Height="24">
+                        <Grid>
+                            <sdk:DataPager x:Name="pager" Source="{Binding ItemsSource.Count, Converter={StaticResource DataPagerConverter}, ElementName=daninfos}" Margin="0,0,0,0" PageSize="30" toolkit:DockPanel.Dock="Top" Height="24"   />
+                            <TextBlock TextWrapping="Wrap"  Margin="0,0,303,-1" Text="{m:Exp Str=$共\{daninfos.ItemsSource.Count\}项}"   Foreground="#FF140000" Width="450" toolkit:DockPanel.Dock="Bottom" Height="25" HorizontalAlignment="Right" TextAlignment="Right" />
+                        </Grid>
+                    </toolkit:DockPanel>
+
+                    <sdk:DataGrid x:Name="daninfos"  Margin="0,0,0,3"   IsReadOnly="True"
 								AutoGenerateColumns="False" Width="Auto" Background="{x:Null}" ItemsSource="{m:Exp Str=userfiles}">
-								<sdk:DataGrid.Columns>
-									<sdk:DataGridTextColumn d:IsLocked="True" Header="序  号" Binding="{Binding Index}"/>
-									<sdk:DataGridTextColumn Header="用户编号" Binding="{Binding f_userid}"/>
-									<sdk:DataGridTextColumn  Header="用户姓名" Binding="{Binding f_username}"/>
-									<sdk:DataGridTextColumn Header="用户地址" Binding="{Binding f_address}"/>
-									<sdk:DataGridTextColumn  Header="用户类型" Binding="{Binding f_usertype}"/>
-									<sdk:DataGridTextColumn Header="气表编号" Binding="{Binding f_meternumber}"/>
-									<sdk:DataGridTextColumn Header="表安装位置" Binding="{Binding f_weizhi}"/>
-									<sdk:DataGridTextColumn  Header="抄表底数" Binding="{Binding lastinputgasnum}"/>
+                        <sdk:DataGrid.Columns>
+                            <sdk:DataGridTextColumn d:IsLocked="True" Header="序  号" Binding="{Binding Index}"/>
+                            <sdk:DataGridTextColumn Header="用户编号" Binding="{Binding f_userid}"/>
+                            <sdk:DataGridTextColumn  Header="用户姓名" Binding="{Binding f_username}"/>
+                            <sdk:DataGridTextColumn Header="用户地址" Binding="{Binding f_address}"/>
+                            <sdk:DataGridTextColumn  Header="用户类型" Binding="{Binding f_usertype}"/>
+                            <sdk:DataGridTextColumn Header="气表编号" Binding="{Binding f_meternumber}"/>
+                            <sdk:DataGridTextColumn Header="表安装位置" Binding="{Binding f_weizhi}"/>
+                            <sdk:DataGridTextColumn  Header="抄表底数" Binding="{Binding lastinputgasnum}"/>
 
-								</sdk:DataGrid.Columns>
-							</sdk:DataGrid>
-						</toolkit:DockPanel>
-					</c:BusyIndicatorEx>
-				</Grid>
-				
-	</Grid>
+                        </sdk:DataGrid.Columns>
+                    </sdk:DataGrid>
+                </toolkit:DockPanel>
+            </c:BusyIndicatorEx>
+        </Grid>
+        <c:MessageTipObj Tip="{m:Exp Str=$导出Excel完成$}" IsShow="{m:Exp Str=downLoad\=>Completed!\=null}"/>
+    </Grid>
 </UserControl>

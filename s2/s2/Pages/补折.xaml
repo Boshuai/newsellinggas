@@ -64,8 +64,8 @@
     			<toolkit:DockPanel>
     				<toolkit:DockPanel toolkit:DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFEEF5FB" >
     					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-    						<Button x:Name="save" Content="保  存" Margin="5" 
-    							IsEnabled="{m:Exp Str=!userfile.DataContext.HasErrors}"
+    						<Button x:Name="save" Content="保  存" Margin="5"
+    							IsEnabled="{m:Exp Str=userfiles.SelectedItem!\=null and !userfile.DataContext.HasErrors}"
     							Click="{m:Exp Str=users.f_zherownum\=12; SaveAction.Invoke()}" Width="50"/>
     						<Button Content="撤  销" Margin="5" Click="{m:Exp Str=userfilego1.New()}" Width="50"/></StackPanel>
     				</toolkit:DockPanel>

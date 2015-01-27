@@ -115,7 +115,7 @@
                     <toolkit:DockPanel>
                         <StackPanel Orientation="Horizontal" toolkit:DockPanel.Dock="Bottom" HorizontalAlignment="Right">
                         <Button x:Name="save" Content="保  存" Margin="5,5,5,8" 
-							IsEnabled="{m:Exp Str=!userfile.DataContext.HasErrors}" 
+							IsEnabled="{m:Exp Str=userfiles.SelectedItem!\=null}" 
 							Click="{m:Exp Str=SaveAction.Invoke()}" Width="50" HorizontalAlignment="Right" d:LayoutOverrides="Height" toolkit:DockPanel.Dock="Bottom" />
                             <Button x:Name="edit" Content="修 改" Margin="5,5,5,8" 
 							IsEnabled="{m:Exp Str=userfiles.SelectedItem!\=null}" 

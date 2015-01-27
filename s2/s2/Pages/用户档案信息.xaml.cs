@@ -45,6 +45,8 @@ namespace Com.Aote.Pages
                 "f_yytoper,CONVERT(varchar(12), f_yytdate, 111 ) f_yytdate,f_credentials,f_idnumber,f_dibaohu,f_gasmetermanufacturers," +
                 "f_aroundmeter,f_gasmeteraccomodations,f_aliasname,f_stairtype,f_stair1amount,f_stair1price,f_stair2amount,f_stair2price,f_stair3amount,f_stair3price,f_stairmonths from t_userfiles " +
                 "where " + userSearch.Condition + " order by id";
+            //d.f_heatingboiler_brand,d.f_heatingboiler_model,d.f_name,d.f_heatingboiler_gonglu,d.f_heatingboiler_tonnage,d.f_heatingboiler_quantity,u.id,
+             //u left join t_devices d on u.id =d.parentid
             userList.LoadOnPathChanged = false;
             userList.Path = "sql";
             userList.SumHQL = "select f_userid,old,f_meternumber,f_username,f_usertype,f_cardid,f_gaswatchbrand,f_metertype,"+

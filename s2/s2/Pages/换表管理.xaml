@@ -251,7 +251,7 @@
                         <TextBlock Grid.Column="4" Margin="0" Grid.Row="3" TextWrapping="Wrap" Text="气      价：" Height="25" TextAlignment="Right"/>
                         <TextBlock Margin="0" Grid.Row="4" TextWrapping="Wrap" Text="表      号：" Height="25" TextAlignment="Right" Grid.Column="4"/>
                         <TextBlock Grid.Column="2" Margin="0" Grid.Row="4" TextWrapping="Wrap" Text="气表型号：" Height="25" TextAlignment="Right"/>
-                        <TextBlock Margin="0" TextWrapping="Wrap" Text="旧 卡 号：" Grid.Column="4" Height="25" TextAlignment="Right"/>
+                        <TextBlock Margin="0" Grid.Row="8" TextWrapping="Wrap" Text="旧 卡 号：" Grid.Column="2" Height="25" TextAlignment="Right"/>
                         <TextBlock Grid.Column="2" Margin="0" Grid.Row="2" TextWrapping="Wrap" Text="类　　型：" Height="25" TextAlignment="Right"/>
                         <TextBlock Grid.Column="4" Margin="0" Grid.Row="5" TextWrapping="Wrap" Text="表 底 数：" Height="25" TextAlignment="Right"/>
                         <TextBlock Margin="0" Grid.Row="7" TextWrapping="Wrap" Text="总累计购气量：" Height="25" TextAlignment="Right"/>
@@ -290,7 +290,7 @@
                         </TextBox>
                         <TextBox Text="{m:Bind Path=f_usertype}" Grid.Column="3" Margin="0" TextWrapping="Wrap" VerticalAlignment="Stretch" IsReadOnly="True" Grid.Row="3" Height="25" Grid.ColumnSpan="1">
                             <a:Data.Prop>
-                                <o:PropertySetter PropertyName="f_usertype" NoDependValue="{m:Exp Str=userfiles.f_usertype\=&gt;Completed}" NotNull="True"/>
+                                <o:PropertySetter PropertyName="f_usertype" NoDependValue="{m:Exp Str=userfiles.f_usertype\=&gt;Completed}"/>
                             </a:Data.Prop>
                         </TextBox>
                         <TextBox Text="{m:Bind Path=f_address}" Grid.ColumnSpan="1" Grid.Column="1" Margin="0,3,0,2" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Stretch" IsReadOnly="True" Height="25">
@@ -339,7 +339,7 @@
                                 <o:PropertySetter PropertyName="f_metertype" NoDependValue="{m:Exp Str=userfiles.f_metertype\=&gt;Completed}" />
                             </a:Data.Prop>
                         </TextBox>
-                        <TextBox Text="{m:Bind Path=f_cardid}" Grid.Column="5" Margin="0" Grid.Row="0" TextWrapping="Wrap" VerticalAlignment="Stretch" Grid.ColumnSpan="1" Height="25" IsReadOnly="True" >
+                        <TextBox Text="{m:Bind Path=f_cardid}" Grid.Column="3" Margin="0" Grid.Row="8" TextWrapping="Wrap" VerticalAlignment="Stretch" Grid.ColumnSpan="1" Height="25" IsReadOnly="True" >
                             <a:Data.Prop>
                                 <o:PropertySetter PropertyName="f_cardid"  NoDependValue="{m:Exp Str=userfiles.f_cardid\=&gt;Completed}"/>
                             </a:Data.Prop>
@@ -683,10 +683,10 @@ Margin="18.667,280.706,381.139,0"/>
             <TextBlock Text="{m:Exp Str=SysTime.Now.ToString($MM$)}"  HorizontalAlignment="Left" Margin="133,65,0,0" TextWrapping="Wrap" Width="25" Height="18" VerticalAlignment="Top" d:LayoutOverrides="Height, GridBox"/>
             <TextBlock Text="{m:Exp Str=SysTime.Now.ToString($dd$)}"  HorizontalAlignment="Left" Margin="181,65,0,0" TextWrapping="Wrap" Width="27" Height="18" VerticalAlignment="Top" d:LayoutOverrides="Height, GridBox"/>
             <TextBlock Text="{m:Exp Str=pipeline.DataContext.f_watchtype}" Margin="132,150,0,0" TextWrapping="Wrap" Height="20" VerticalAlignment="Top" Grid.ColumnSpan="1" d:LayoutOverrides="Height, GridBox" HorizontalAlignment="Left" Width="142"/>
-            <TextBlock Text="{m:Exp Str=pipeline.DataContext.f_pinpai}" Margin="131,185,0,0" TextWrapping="Wrap" Height="20" VerticalAlignment="Top" Grid.ColumnSpan="1" d:LayoutOverrides="Height, GridBox" HorizontalAlignment="Left" Width="142"/>
+            <TextBlock Text="{m:Exp Str=pipeline.DataContext.f_cmnewgaswatchbrand}" Margin="131,185,0,0" TextWrapping="Wrap" Height="20" VerticalAlignment="Top" Grid.ColumnSpan="1" d:LayoutOverrides="Height, GridBox" HorizontalAlignment="Left" Width="142"/>
             <TextBlock Text="{m:Exp Str=pipeline.DataContext.f_filiale}" Margin="130,0,0,38" TextWrapping="Wrap" Height="20" VerticalAlignment="Bottom" Grid.ColumnSpan="1" d:LayoutOverrides="VerticalAlignment, Height, GridBox" HorizontalAlignment="Left" Width="143"/>
             <TextBlock Text="{m:Exp Str=pipeline.DataContext.f_replacewatchtype}" Margin="384,151,0,0" TextWrapping="Wrap" Height="20" VerticalAlignment="Top" d:LayoutOverrides="Height, GridBox" HorizontalAlignment="Left" Width="147"/>
-            <TextBlock Text="{m:Exp Str=pipeline.DataContext.f_qbnumber}" Margin="383,186,0,0" TextWrapping="Wrap" Height="20" VerticalAlignment="Top" d:LayoutOverrides="Height, GridBox" HorizontalAlignment="Left" Width="148"/>
+            <TextBlock Text="{m:Exp Str=pipeline.DataContext.f_cmnewmetertype}" Margin="383,186,0,0" TextWrapping="Wrap" Height="20" VerticalAlignment="Top" d:LayoutOverrides="Height, GridBox" HorizontalAlignment="Left" Width="148"/>
             <TextBlock Text="{m:Exp Str=pipeline.DataContext.f_changmeterfee.ToChinaMoney()}"  HorizontalAlignment="Left" Margin="132,255,0,71" TextWrapping="Wrap" Width="399" Height="20" d:LayoutOverrides="GridBox"/>
             <TextBlock Text="{m:Exp Str=pipeline.DataContext.f_username}" Margin="0,88,382,0" Height="20" VerticalAlignment="Top" d:LayoutOverrides="Height, GridBox" HorizontalAlignment="Right" Width="108"/>
             <TextBlock Text="{m:Exp Str=pipeline.DataContext.f_address}"  HorizontalAlignment="Stretch" Margin="385,117,381,0"  Width="Auto" Height="20" VerticalAlignment="Top" d:LayoutOverrides="Height, GridBox"/>

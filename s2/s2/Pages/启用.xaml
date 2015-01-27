@@ -47,13 +47,14 @@
 				<b:BatchInfo Source="{m:Exp Str=pipeline.DataContext}" MethodName="SaveToJson"/>
 			</b:BatchExcuteAction>
 		<o:GeneralObject  Name="pipelineg" WebClientInfo="{StaticResource dbclient}" 
-		EntityType="t_stopgas" 
+		EntityType="t_enabled" 
 		IsInit="{m:Exp Str='SaveAction.State==$End'}"        	>
             			<!--o:PropertySetter PropertyName="f_userstate"  /-->
 					</o:GeneralObject>
 	
 	</m:ResourceLoad>
 	<Grid >
+
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="3*"/>
 			<ColumnDefinition Width="7*"/>
@@ -75,7 +76,13 @@
             				<o:PropertySetter PropertyName="f_userid" Operator="f_userid like 'this%'"/>               
             			</a:Data.Prop>
             		</TextBox>
-            			<ComboBox Name="Comboxfx"   Visibility="{m:Exp Str='LoginUser.f_fengongsi \=\= zonggongsi.value:$Visible$\,$Collapsed$'}" SelectedValue="{m:Bind Path=f_filiale}" ItemsSource="{m:Exp Str=fgslist}"  Margin="5" DisplayMemberPath="name" SelectedValuePath="name"  Height="25" Width="70" RenderTransformOrigin="2.5,0.44" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <TextBlock TextWrapping="Wrap" Grid.Row="1" Text="用户姓名：" Margin="5,0,0,0"/>
+                        <TextBox TextWrapping="Wrap" Grid.Row="1" Height="25" Text="{m:Bind Path=f_username}" Width="70" a:ControlAttach.DefaultButton="searchbutton" >
+                            <a:Data.Prop>
+                                <o:PropertySetter PropertyName="f_username" Operator="f_username like 'this%'"/>
+                            </a:Data.Prop>
+                        </TextBox>
+                        <ComboBox Name="Comboxfx"   Visibility="{m:Exp Str='LoginUser.f_fengongsi \=\= zonggongsi.value:$Visible$\,$Collapsed$'}" SelectedValue="{m:Bind Path=f_filiale}" ItemsSource="{m:Exp Str=fgslist}"  Margin="5" DisplayMemberPath="name" SelectedValuePath="name"  Height="25" Width="70" RenderTransformOrigin="2.5,0.44" HorizontalAlignment="Right" VerticalAlignment="Center">
 						<a:Data.Prop>
                     		<o:PropertySetter PropertyName="f_filiale"  Operator="f_filiale like 'this%'"/>          
                     	</a:Data.Prop>
@@ -98,7 +105,7 @@
             			<sdk:DataGridTextColumn Header="部门" Binding="{Binding f_parentname}" d:IsLocked="True"/>
             			<sdk:DataGridTextColumn Header="停用人" Binding="{Binding f_soperator}"/>
                         <sdk:DataGridTextColumn Header="停用日期" Binding="{Binding f_stopdate,StringFormat=yyyy-MM-dd}"/>
-						
+						<!--<sdk:DataGridTextColumn Header="停用原因" Binding="{Binding f_stopdate,StringFormat=yyyy-MM-dd}"/>-->
             		</sdk:DataGrid.Columns>
             	</sdk:DataGrid>
 				<!--信息列表-->
@@ -150,7 +157,9 @@
             			<RowDefinition Height="35" />
             			<RowDefinition Height="35"/>
 						<RowDefinition Height="35"/>
-            		</Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        </Grid.RowDefinitions>
             		<TextBlock TextWrapping="Wrap" Text="用户编号：" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             		<TextBlock Grid.Column="4" Margin="0" TextWrapping="Wrap" Text="用户姓名：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             		<TextBlock Margin="0" Grid.Row="1" TextWrapping="Wrap" Text="用户地址：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
@@ -159,11 +168,9 @@
             		<TextBlock Grid.Column="0" Margin="0" Grid.Row="4" TextWrapping="Wrap" Text="用户类型：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             		<TextBlock Margin="0" Grid.Row="3" TextWrapping="Wrap" Text="表      号：" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="2"/>
             		<!--<TextBlock Margin="0" Grid.Row="4" TextWrapping="Wrap" Text="停用底数：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-            		--><TextBlock Margin="0" Grid.Row="4" TextWrapping="Wrap" Text="停用日期：" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="2"/>
-            		<TextBlock Grid.Column="2" Margin="0" Grid.Row="5" TextWrapping="Wrap" Text="抄表日期：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-            		<TextBlock Grid.Column="2" Margin="0" Grid.Row="6" TextWrapping="Wrap" Text="启用日期：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-            		<TextBlock Margin="0" Grid.Row="5" TextWrapping="Wrap" Text="抄 表 人：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-            		<TextBlock Grid.Column="2" Margin="0" Grid.Row="7" TextWrapping="Wrap" Text="操 作 人：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            		-->
+                        <TextBlock Margin="0" Grid.Row="4" TextWrapping="Wrap" Text="停用日期：" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="2"/>
+                        <TextBlock Grid.Column="2" Margin="0" Grid.Row="7" TextWrapping="Wrap" Text="操 作 人：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             		<TextBlock Margin="0" Grid.Row="7" TextWrapping="Wrap" Text="部      门：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             		<TextBlock Grid.Column="4" Margin="0" Grid.Row="7" TextWrapping="Wrap" Text="操作日期：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             		<TextBox Text="{m:Bind Path=f_userid}" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,6" TextWrapping="Wrap" VerticalAlignment="Stretch" >
@@ -174,6 +181,12 @@
             		<TextBox Text="{m:Bind Path=f_username}" Grid.Column="5" Margin="0" TextWrapping="Wrap" VerticalAlignment="Center" IsReadOnly="True">
             			<a:Data.Prop>
             				<o:PropertySetter PropertyName="f_username" Value="{m:Exp Str=userfiles.f_username\=>Completed}" />
+            			</a:Data.Prop>
+            		</TextBox>
+                    <TextBlock  Margin="0" Grid.Row="5" TextWrapping="Wrap" Text="停用原因：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <TextBox Text="{m:Bind Path=f_stopgasreason}" IsReadOnly="True" Grid.ColumnSpan="5" Grid.RowSpan="2" Grid.Column="1" Margin="0,2" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Stretch">
+            			<a:Data.Prop>
+            				<o:PropertySetter PropertyName="f_stopgasreason" />
             			</a:Data.Prop>
             		</TextBox>
             		<TextBox Text="{m:Bind Path=f_address}" Grid.ColumnSpan="5" Grid.Column="1" Margin="0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" IsReadOnly="True" >
@@ -211,23 +224,13 @@
             				<o:PropertySetter PropertyName="f_stopdate"  Value="{m:Exp Str=userfiles.f_stopdate\=>Completed}"/>
             			</a:Data.Prop>
             		</sdk:DatePicker>	
-            		<sdk:DatePicker SelectedDate="{m:Bind Path=f_mrdate}" Grid.Column="3" Margin="0" Grid.Row="5" VerticalAlignment="Center">
-            			<a:Data.Prop>
-            				<o:PropertySetter PropertyName="f_mrdate"
-            					Default="{m:Exp Str=SysTime.Now}"/>
-            			</a:Data.Prop>
-            		</sdk:DatePicker>
-            		<sdk:DatePicker SelectedDate="{m:Bind Path=f_openingdate}" Grid.Column="3" Margin="0" Grid.Row="6" VerticalAlignment="Center" IsEnabled="False">
+                    <TextBlock Grid.Column="2" Margin="0" Grid.Row="8" TextWrapping="Wrap" Text="启用日期：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            		<sdk:DatePicker SelectedDate="{m:Bind Path=f_openingdate}" Grid.Column="3" Margin="0" Grid.Row="8" VerticalAlignment="Center" IsEnabled="False">
             			<a:Data.Prop>
             				<o:PropertySetter PropertyName="f_openingdate"
             					Default="{m:Exp Str=SysTime.Now}"/>
             			</a:Data.Prop>
             		</sdk:DatePicker>	
-            		<TextBox Text="{m:Bind Path=f_mrperson}" Grid.Column="1" Margin="0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Center">
-            			<a:Data.Prop>
-            				<o:PropertySetter PropertyName="f_mrperson" />
-            			</a:Data.Prop>
-            		</TextBox>
             		<TextBox Text="{m:Bind Path=f_rcoperator}" Grid.Column="3" Margin="0" Grid.Row="7" TextWrapping="Wrap" VerticalAlignment="Center" IsReadOnly="True">
             			<a:Data.Prop>
             				<o:PropertySetter PropertyName="f_rcoperator" Default="{m:Exp Str=LoginUser.name}" />
